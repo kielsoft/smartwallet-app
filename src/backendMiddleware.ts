@@ -5,9 +5,11 @@ import { EncryptionLib, EncryptionLibInterface } from 'src/lib/crypto'
 import { Storage } from 'src/lib/storage/storage'
 import { KeyChain, KeyChainInterface } from 'src/lib/keychain'
 import { ConnectionOptions } from 'typeorm/browser'
+import { ILibConfig } from 'jolocom-lib/js/types';
 
 // TODO Type config better
-interface BackendMiddlewareConfig {
+export interface BackendMiddlewareConfigInterface {
+    defaultConfig?: ILibConfig,
     fuelingEndpoint: string, 
     typeOrmConfig: ConnectionOptions
 }
@@ -19,7 +21,7 @@ export class BackendMiddleware {
   encryptionLib: EncryptionLibInterface
   keyChainLib: KeyChainInterface
 
-  constructor(config: BackendMiddlewareConfig) {
+  constructor(config: BackendMiddlewareConfigInterface) {
     this.ethereumLib = new EthereumLib(config.fuelingEndpoint)
     this.storageLib = new Storage(config.typeOrmConfig),
     this.encryptionLib = new EncryptionLib(),
