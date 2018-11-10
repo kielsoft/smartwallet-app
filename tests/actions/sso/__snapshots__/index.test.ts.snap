@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SSO action creators should correctly parse encoded JWT string without any Exception and consumeRedentialRequest 1`] = `
+Array [
+  Object {
+    "type": "SET_CREDENTIAL_REQUEST",
+    "value": Object {
+      "availableCredentials": Array [
+        Object {
+          "type": "Email",
+          "values": Array [
+            "kielsoft@gmail.com",
+          ],
+          "verifications": Array [],
+        },
+        Object {
+          "type": "Name",
+          "values": Array [
+            "Olayode",
+            "Ezekiel",
+          ],
+          "verifications": Array [],
+        },
+      ],
+      "callbackURL": "http://localhost:9000/authentication/2a3hg",
+      "requester": "did:jolo:b310d293aeac8a5ca680232b96901fe85988fde2860a1a5db69b49762923cc88#keys-1",
+    },
+  },
+  Object {
+    "loading": false,
+    "type": "SET_LOADING",
+  },
+  Object {
+    "routeName": "Consent",
+    "type": "Navigation/NAVIGATE",
+  },
+]
+`;
+
+exports[`SSO action creators should set credential request json data 1`] = `
+Object {
+  "type": "SET_CREDENTIAL_REQUEST",
+  "value": Object {
+    "availableCredentials": Array [],
+    "callbackURL": "http://192.168.8.102:9000/authentication/",
+    "requester": "did:jolo:test",
+  },
+}
+`;
