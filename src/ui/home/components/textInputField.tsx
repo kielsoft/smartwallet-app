@@ -54,6 +54,15 @@ export class TextInputField extends React.Component<Props, State> {
   render() {
     const { fieldValue, fieldName, handleFieldInput } = this.props
     const labelText = this.state.focused || !fieldValue ? this.state.fieldNameDisplay : ''
+    let inputKeyboardType = "default";
+    switch(labelText){
+        case 'Email':
+            inputKeyboardType = "email-address"
+            break;
+        case 'Telephone':
+            inputKeyboardType = "phone-pad"
+            break;
+    }
     
     return (
       <View style={ styles.inputContainer }>
@@ -62,6 +71,7 @@ export class TextInputField extends React.Component<Props, State> {
           onBlur={ () => this.handleBlur() }
           label={ labelText }
           labelTextStyle={ styles.labelStyle }
+          keyboardType={inputKeyboardType}
           style={{ fontFamily: JolocomTheme.contentFontFamily }}
           tintColor={ JolocomTheme.primaryColorPurple }
           textColor={ JolocomTheme.primaryColorBlack }

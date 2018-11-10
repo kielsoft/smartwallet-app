@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react'
-import { View, Text, StyleSheet, GestureResponderEvent, TextStyle, ViewStyle, RegisteredStyle } from 'react-native'
+import { View, Text, StyleSheet, GestureResponderEvent, TextStyle, ViewStyle, RegisteredStyle, TouchableOpacity } from 'react-native'
 import { JolocomTheme } from 'src/styles/jolocom-theme'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
@@ -7,6 +7,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 // TODO Make whole card clickable as opposed to icon
 // TODO Changes to the 'Container' custom component to allow horisontal flex
 interface ClaimCardProps {
+  clickHandler?: (e: GestureResponderEvent) => void
   rightIcon?: ReactNode
   secondaryText?: string | ReactNode
   primaryText: string | ReactNode
@@ -34,17 +35,19 @@ export const ClaimCard: React.SFC<ClaimCardProps> = props => {
     }
   })
 
-  const { primaryText, secondaryText, rightIcon, primaryTextStyle, secondaryTextStyle, containerStyle } = props
+  const { primaryText, secondaryText, rightIcon, primaryTextStyle, secondaryTextStyle, containerStyle, clickHandler } = props
   const { primaryTextDefault, secondaryTextDefault, containerDefault } = styles
 
   return (
-    <View style={{ display: 'flex', flexDirection: 'row', backgroundColor: 'white' }}>
-      <View style={[containerDefault, containerStyle]}>
-        <Text style={[primaryTextDefault, secondaryTextDefault, secondaryTextStyle]}>{secondaryText}</Text>
-        <Text style={[primaryTextDefault, primaryTextStyle]}>{primaryText}</Text>
-      </View>
-      <View flex={0.2} >{rightIcon}</View>
-    </View>
+    <TouchableOpacity onPress={clickHandler}>
+        <View style={{ display: 'flex', flexDirection: 'row', backgroundColor: 'white' }} >
+        <View style={[containerDefault, containerStyle]}>
+            <Text style={[primaryTextDefault, secondaryTextDefault, secondaryTextStyle]}>{secondaryText}</Text>
+            <Text style={[primaryTextDefault, primaryTextStyle]}>{primaryText}</Text>
+        </View>
+        <View flex={0.2} >{rightIcon}</View>
+        </View>
+    </TouchableOpacity>
   )
 }
 
@@ -54,9 +57,10 @@ interface EmptyClaimCardProps {
 }
 
 export const PlaceholderClaimCard: React.SFC<EmptyClaimCardProps> = props => (
-  <ClaimCard
+  <ClaimCard 
+    clickHandler={props.onEdit}
     key={props.credentialType}
-    primaryText={<Text onPress={props.onEdit}>+ add</Text>}
+    primaryText={<Text>+ add</Text>}
     primaryTextStyle={{ color: JolocomTheme.primaryColorPurple }}
     secondaryText={<Text>{props.credentialType}</Text>}
     secondaryTextStyle={{ opacity: 1 }}
@@ -97,7 +101,7 @@ export const ConsentAttributeCard: React.SFC<ConsentAttributeCardProps> = props 
       return <ClaimCard primaryText={'No local claims'} />
     }
 
-    return values.map(value => <ClaimCard primaryText={value} containerStyle={{ marginBottom: 0 }} />)
+    return values.map((value, index) => <ClaimCard key={('claimCard'+index)} primaryText={value} containerStyle={{ marginBottom: 0 }} />)
   }
 
   const { values, issuer, did, rightIcon, containerStyle } = props

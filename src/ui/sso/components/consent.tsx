@@ -152,7 +152,7 @@ export class ConsentComponent extends React.Component<Props, State> {
     ) : null
 
     return (
-      <View>
+      <View key={("key"+idx)}>
         {headerSection}
         <ConsentAttributeCard
           containerStyle={{ paddingLeft: '20%' }}

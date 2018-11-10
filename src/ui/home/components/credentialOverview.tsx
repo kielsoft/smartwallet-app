@@ -67,7 +67,7 @@ export class CredentialOverview extends React.Component<Props, State> {
     const decoratedCredentials: CategorizedClaims = claimsState.decoratedCredentials
     const categorizedCredentials: DecoratedClaims[] = decoratedCredentials[category] || []
 
-    return categorizedCredentials.map((claim: DecoratedClaims) => {
+    return categorizedCredentials.map((claim: DecoratedClaims, index) => {
       const filteredKeys = Object.keys(claim.claimData).filter(el => el !== 'id')
       const captialized = filteredKeys.reduce(
         (acc, curr) => ({ ...acc, [prepareLabel(curr)]: claim.claimData[curr] }),
@@ -76,7 +76,8 @@ export class CredentialOverview extends React.Component<Props, State> {
       const selfSigned = claim.issuer === did
 
       return (
-        <CredentialCard
+        <CredentialCard 
+          key={('CredentialCard_' + index)}
           handleInteraction={() => onEdit(claim)}
           credentialItem={{ ...claim, claimData: captialized }}
           collapsible={collapsible(claim)}
@@ -92,7 +93,7 @@ export class CredentialOverview extends React.Component<Props, State> {
       return null
     }
 
-    return [<Text style={styles.sectionHeader}>{category.toString()}</Text>, this.renderCredentialCard(category)]
+    return [<Text key={category.toString()} style={styles.sectionHeader}>{category.toString()}</Text>, this.renderCredentialCard(category)]
   }
 
   render() {
