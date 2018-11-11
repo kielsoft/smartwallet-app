@@ -22,6 +22,7 @@ exports[`TextInputField component matches the snapshot on render 1`] = `
     errorColor="rgb(213, 0, 0)"
     fontSize={16}
     inputContainerPadding={8}
+    keyboardType="default"
     label=""
     labelFontSize={12}
     labelHeight={32}
